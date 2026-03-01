@@ -9,5 +9,9 @@
     <color name="blue_primary">#2196F3</color>
     <color name="green_button">#1b850d</color>
 
+    <color name="background_base">#c5c5c5</color>
+    <color name="background_lighter">#eeeeee</color>
+
+    <color name="text_base">#222222</color>
 
 </resources>

@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreen">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/splash_screen_gradient"
+    >
 
     <ImageView
         android:id="@+id/imageView"
         android:src="@drawable/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:paddingHorizontal="40dp"
+        android:paddingBottom="20dp"
+        />
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_base"
+        />
+
+    <View
+        android:layout_width="128dp"
+        android:layout_height="2dp"
+        android:background="@color/green_primary"
+        android:layout_marginBottom="40dp"
+        />
+
+    <ProgressBar
+        android:layout_width="128dp"
+        android:layout_height="24dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminateTint="@color/green_primary"
+        android:indeterminate="true"
+        />
+
+</LinearLayout>

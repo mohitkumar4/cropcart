@@ -42,18 +42,7 @@ class SplashScreen : AppCompatActivity() {
     }
 
     private fun isLoggedIn(): Boolean {
-
         val currentAuth = FirebaseAuth.getInstance().currentUser
-
-        if(currentAuth != null)
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-
+        return currentAuth != null
     }
-
 }

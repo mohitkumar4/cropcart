@@ -38,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar2)
 
         loginButton.setOnClickListener {
-
             val email = emailField.text.toString().trim()
             val password = passwordField.text.toString().trim()
 
@@ -50,9 +49,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
            loginUser(email, password)
-
         }
 
         val notregistered = findViewById<TextView>(R.id.notregistered)
@@ -73,15 +70,10 @@ class LoginActivity : AppCompatActivity() {
     {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task->
-
                 if(task.isSuccessful)
                 {
                     val userId = mAuth.currentUser?.uid
-
-                    if(userId != null)
-                    {
-                        fetchUserData(userId)
-                    }
+                    if(userId != null) fetchUserData(userId)
                 }
                 else
                 {
@@ -100,16 +92,12 @@ class LoginActivity : AppCompatActivity() {
                 {
                     val username = document.getString("username")
                     Toast.makeText(this, "Welcome, $username!", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
-
             }
             .addOnFailureListener {
-
                 Toast.makeText(this, "Failed to retrieve user data", Toast.LENGTH_SHORT).show()
-
             }
     }
 

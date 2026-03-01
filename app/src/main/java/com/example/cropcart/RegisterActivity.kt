@@ -67,8 +67,8 @@ class RegisterActivity : AppCompatActivity() {
                         db.collection("users").document(userId).set(user)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show()
-                                finish()
                                 Log.d("RegisterActivity", "Username saved successfully")
+                                startActivity(Intent(this, MainActivity::class.java))
                             }
                             .addOnFailureListener {
                                 Log.e("RegisterActivity", "Error saving username", it)
