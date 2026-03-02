@@ -16,6 +16,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.cropcart.account.ProfilePageActivity
+import com.example.cropcart.address.ManageAddressesActivity
+import com.example.cropcart.cart.CartActivity
+import com.example.cropcart.section.BuyFragment
+import com.example.cropcart.seller.SellFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

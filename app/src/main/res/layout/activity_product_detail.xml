@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:background="#F8F8F8"
-    tools:context=".ProductDetailActivity">
+    tools:context=".product.ProductDetailActivity">
 
     <!-- Scrollable content -->
     <ScrollView

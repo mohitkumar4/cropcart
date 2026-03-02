@@ -14,47 +14,47 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CropCart">
         <activity
-            android:name=".EditAddressActivity"
+            android:name=".address.EditAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".AddAddressActivity"
+            android:name=".address.AddAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".ManageAddressesActivity"
+            android:name=".address.ManageAddressesActivity"
             android:exported="false" />
         <activity
-            android:name=".EditProductActivity"
+            android:name=".product.EditProductActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".MyProductsActivity"
+            android:name=".product.MyProductsActivity"
             android:exported="false" />
         <activity
-            android:name=".SellerOrdersActivity"
+            android:name=".seller.SellerOrdersActivity"
             android:exported="false" />
         <activity
-            android:name=".OrdersActivity"
+            android:name=".orders.OrdersActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
+            android:name=".cart.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductDetailActivity"
+            android:name=".product.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".AddProductActivity"
+            android:name=".product.AddProductActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfilePageActivity"
+            android:name=".account.ProfilePageActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".account.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".account.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"
