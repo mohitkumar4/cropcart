@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioGroup
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,7 @@ class AddProductActivity : AppCompatActivity() {
 
     private lateinit var inputQuantity: EditText
 
-    private lateinit var inputCategory: EditText
+    private lateinit var radioGroup: RadioGroup
     private lateinit var btnSubmitProduct: Button
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -53,7 +54,25 @@ class AddProductActivity : AppCompatActivity() {
 
         inputName = findViewById(R.id.inputName)
         inputImage = findViewById(R.id.inputImage)
-        inputCategory = findViewById(R.id.inputCategory)
+
+        radioGroup = findViewById<RadioGroup>(R.id.radioCategoryGroup)
+
+        var selectedCategory: ProductRepo.Category = ProductRepo.Categories.others
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            selectedCategory = when (checkedId) {
+                R.id.radioAll -> ProductRepo.Categories.all
+                R.id.radioCereals -> ProductRepo.Categories.cereals
+                R.id.radioPulses -> ProductRepo.Categories.pulses
+                R.id.radioVegetables -> ProductRepo.Categories.vegetables
+                R.id.radioFruits -> ProductRepo.Categories.fruits
+                R.id.radioOilSeeds -> ProductRepo.Categories.oilSeeds
+                R.id.radioSpices -> ProductRepo.Categories.spices
+                R.id.radioSeeds -> ProductRepo.Categories.seeds
+                R.id.radioOthers -> ProductRepo.Categories.others
+                else -> ProductRepo.Categories.others
+            }
+        }
+
         inputPrice = findViewById(R.id.inputPrice)
         inputDescription = findViewById(R.id.inputDescription)
         inputSection = findViewById(R.id.inputSection)
@@ -68,9 +87,8 @@ class AddProductActivity : AppCompatActivity() {
             val description = inputDescription.text.toString().trim()
             val image = inputImage.text.toString().trim()
             val section = inputSection.text.toString().trim()
-            val category = inputCategory.text.toString().trim()
+            val category = selectedCategory.name
             val quantityText = inputQuantity.text.toString().trim()
-
 
 
             if (name.isEmpty() || priceText.isEmpty() || description.isEmpty() || image.isEmpty() || section.isEmpty() || category.isEmpty() || quantityText.isEmpty()) {
@@ -79,20 +97,30 @@ class AddProductActivity : AppCompatActivity() {
             }
 
             val price = try {
-                priceText.toDouble()
+                val convertedPrice = priceText.toDouble()
+                if (convertedPrice <= 0.0){
+                    Toast.makeText(this, "Invalid price: must be greater than 0", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                convertedPrice
             } catch (e: NumberFormatException) {
                 Toast.makeText(this, "Invalid price", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val quantity = quantityText.toIntOrNull()
-
-
+            val quantity  = try {
+                val convertedQuantity =  quantityText.toInt()
+                if (convertedQuantity <= 0){
+                    Toast.makeText(this, "Invalid quantity: must be greater than 0", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                convertedQuantity
+            } catch (e: NumberFormatException) {
+                Toast.makeText(this, "Invalid price", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val sellerId = currentUser!!.uid
-
-
-
 
             db.collection("users").document(sellerId).get()
                 .addOnSuccessListener { document ->

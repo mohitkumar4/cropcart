@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,7 @@ class EditProductActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var nameField: EditText
     private lateinit var priceField: EditText
-    private lateinit var categoryField: EditText
+    private lateinit var radioCategoryGroup: RadioGroup
     private lateinit var sectionField: EditText
     private lateinit var quantityField: EditText
     private lateinit var descriptionField: EditText
@@ -30,6 +31,9 @@ class EditProductActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private var productId: String? = null
     private var existingImageUrl: String? = null
+
+
+    private lateinit var selectedCategory: ProductRepo.Category
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +60,23 @@ class EditProductActivity : AppCompatActivity() {
         imageView = findViewById(R.id.productImage)
         nameField = findViewById(R.id.editProductName)
         priceField = findViewById(R.id.editProductPrice)
-        categoryField = findViewById(R.id.editProductCategory)
+        radioCategoryGroup = findViewById(R.id.radioCategoryGroup)
+
+        selectedCategory = ProductRepo.Categories.others
+        radioCategoryGroup.setOnCheckedChangeListener { _, checkedId ->
+            selectedCategory = when (checkedId) {
+                R.id.radioAll -> ProductRepo.Categories.all
+                R.id.radioCereals -> ProductRepo.Categories.cereals
+                R.id.radioPulses -> ProductRepo.Categories.pulses
+                R.id.radioVegetables -> ProductRepo.Categories.vegetables
+                R.id.radioFruits -> ProductRepo.Categories.fruits
+                R.id.radioOilSeeds -> ProductRepo.Categories.oilSeeds
+                R.id.radioSpices -> ProductRepo.Categories.spices
+                R.id.radioSeeds -> ProductRepo.Categories.seeds
+                R.id.radioOthers -> ProductRepo.Categories.others
+                else -> ProductRepo.Categories.others
+            }
+        }
         sectionField = findViewById(R.id.editProductSection)
         quantityField = findViewById(R.id.editProductQuantity)
         descriptionField = findViewById(R.id.editProductDescription)
@@ -83,7 +103,20 @@ class EditProductActivity : AppCompatActivity() {
                     val product = doc.toObject(FeaturedProduct::class.java)
                     nameField.setText(product?.name)
                     priceField.setText(product?.price.toString())
-                    categoryField.setText(product?.category)
+
+                    val category = when(product?.category) {
+                        ProductRepo.Categories.all.name -> R.id.radioAll
+                        ProductRepo.Categories.cereals.name -> R.id.radioCereals
+                        ProductRepo.Categories.pulses.name -> R.id.radioPulses
+                        ProductRepo.Categories.vegetables.name -> R.id.radioVegetables
+                        ProductRepo.Categories.fruits.name -> R.id.radioFruits
+                        ProductRepo.Categories.oilSeeds.name -> R.id.radioOilSeeds
+                        ProductRepo.Categories.spices.name -> R.id.radioSpices
+                        ProductRepo.Categories.seeds.name -> R.id.radioSeeds
+                        ProductRepo.Categories.others.name -> R.id.radioOthers
+                        else -> R.id.radioOthers
+                    }
+                    radioCategoryGroup.check(category)
                     sectionField.setText(product?.section)
                     quantityField.setText(product?.quantity.toString())
                     descriptionField.setText(product?.description)
@@ -103,24 +136,36 @@ class EditProductActivity : AppCompatActivity() {
 
     private fun saveProductChanges() {
         val name = nameField.text.toString().trim()
-        val price = priceField.text.toString().trim().toDoubleOrNull()
-        val category = categoryField.text.toString().trim()
+        val price = priceField.text.toString().trim()
+        val category = selectedCategory.name.trim()
         val section = sectionField.text.toString().trim()
-        val quantity = quantityField.text.toString().trim().toIntOrNull()
+        val quantity = quantityField.text.toString().trim()
         val description = descriptionField.text.toString().trim()
         val imageUrl = imageUrlField.text.toString().trim()
 
-        if (name.isEmpty() || price == null || category.isEmpty() || section.isEmpty() || quantity == null || description.isEmpty()) {
+        if (name.isEmpty() || price.isEmpty() || category.isEmpty() || section.isEmpty() || quantity.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "Please fill all fields correctly", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val convertedPrice = price.toDoubleOrNull()
+        if(convertedPrice == null || convertedPrice <= 0){
+            Toast.makeText(this, "Price must be a number greater than 0", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val convertedQuantity = quantity.toIntOrNull()
+        if(convertedQuantity == null || convertedQuantity <= 0){
+            Toast.makeText(this, "Quantity must be a number greater than 0", Toast.LENGTH_SHORT).show()
             return
         }
 
         val updatedData = mapOf(
             "name" to name,
-            "price" to price,
+            "price" to convertedPrice,
             "category" to category,
             "section" to section,
-            "quantity" to quantity,
+            "quantity" to convertedQuantity,
             "description" to description,
             "image" to if (imageUrl.isNotEmpty()) imageUrl else existingImageUrl
         )

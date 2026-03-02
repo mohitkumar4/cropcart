@@ -110,13 +110,75 @@
             android:textSize="14sp"
             android:textColor="#555555" />
 
-        <EditText
-            android:id="@+id/editProductCategory"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="e.g. Fruits, Vegetables"
-            android:inputType="text"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:text="Category"
+            android:textStyle="bold"
+            />
+
+        <RadioGroup
+            android:id="@+id/radioCategoryGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All" />
+
+            <RadioButton
+                android:id="@+id/radioCereals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cereals" />
+
+            <RadioButton
+                android:id="@+id/radioPulses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pulses" />
+
+            <RadioButton
+                android:id="@+id/radioVegetables"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegetables" />
+
+            <RadioButton
+                android:id="@+id/radioFruits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fruits" />
+
+            <RadioButton
+                android:id="@+id/radioOilSeeds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oil Seeds" />
+
+            <RadioButton
+                android:id="@+id/radioSpices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spices" />
+
+            <RadioButton
+                android:id="@+id/radioSeeds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seeds" />
+
+            <RadioButton
+                android:id="@+id/radioOthers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Others" />
+
+        </RadioGroup>
 
         <!-- Section -->
         <TextView
