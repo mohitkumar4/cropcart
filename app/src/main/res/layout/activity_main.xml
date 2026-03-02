@@ -52,7 +52,7 @@
                 app:tint="@android:color/white" />
 
             <LinearLayout
-                android:id="@+id/address"
+                android:id="@+id/addressCtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -91,7 +91,7 @@
     <View
         android:layout_width="64dp"
         android:layout_height="2dp"
-        android:background="#81C784"
+        android:background="@color/primary_base"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -149,7 +149,7 @@ class AddProductActivity : AppCompatActivity() {
                                     "Product added successfully!",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                clearFields()
+                                finish()
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(
@@ -167,14 +167,6 @@ class AddProductActivity : AppCompatActivity() {
                         .show()
                 }
         }
-    }
-
-    private fun clearFields() {
-        inputName.text.clear()
-        inputPrice.text.clear()
-        inputDescription.text.clear()
-        inputImage.text.clear()
-        inputSection.text.clear()
     }
 
     private fun setupKeyboardAvoidance() {

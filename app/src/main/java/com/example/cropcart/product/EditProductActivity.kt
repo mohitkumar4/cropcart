@@ -179,6 +179,8 @@ class EditProductActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to update product: ${it.message}", Toast.LENGTH_SHORT).show()
             }
+
+        finish()
     }
 
     private fun setupKeyboardAvoidance() {

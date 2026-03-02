@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.topAppBar)
         val bottomNav = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNavigation)
         val curve = findViewById<View>(R.id.curveBackground)
-        val address = findViewById<LinearLayout>(R.id.address)
+        val address = findViewById<LinearLayout>(R.id.addressCtn)
 
         address.setOnClickListener {
             startActivity(Intent(this, ManageAddressesActivity::class.java))
