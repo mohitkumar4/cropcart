@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.cropcart.account.ProfilePageActivity
 import com.example.cropcart.address.ManageAddressesActivity
@@ -26,10 +28,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
-
     private val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-
     private val db = FirebaseFirestore.getInstance()
+
+    // views
+    private lateinit var curve: View
+
+    // constants
+    private var buyTheme: Int = R.drawable.curve_background
+    private var sellTheme: Int = R.drawable.curve_background_blue
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,50 +46,33 @@ class MainActivity : AppCompatActivity() {
 
 
         val toolbar = findViewById<Toolbar>(R.id.topAppBar)
-        val bottomNav = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNavigation)
-        val curve = findViewById<View>(R.id.curveBackground)
+        curve = findViewById<View>(R.id.curveBackground)
         val address = findViewById<LinearLayout>(R.id.addressCtn)
 
         address.setOnClickListener {
             startActivity(Intent(this, ManageAddressesActivity::class.java))
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(bottomNav) { view, insets ->
-            val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            // Set LEFT and RIGHT padding only — NO BOTTOM padding
-            view.setPadding(systemBarsInsets.left, 0, systemBarsInsets.right, 0)
-
-            insets
-        }
-
-
         if(savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, BuyFragment())
-                .commit()
-        }
-
-        bottomNav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.buy -> {
-                    curve.background = ContextCompat.getDrawable(this, R.drawable.curve_background)
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, BuyFragment())
-                        .commit()
-
-                    true
+            db.collection(FirebaseRepo.Key.collectionUsers).document(userId).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()){
+                        val type = document.getBoolean(FirebaseRepo.Key.type)
+                        if (type == null) {
+                            Toast.makeText(
+                                this,
+                                "Error: Cannot determine account type",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@addOnSuccessListener
+                        }
+                        if(type) loadFragment(BuyFragment(), buyTheme) else loadFragment(SellFragment(), sellTheme)
+                    }
+                    else Toast.makeText(this, "Error connecting to the database: Cannot find user", Toast.LENGTH_SHORT).show()
                 }
-                R.id.sell -> {
-                    curve.background = ContextCompat.getDrawable(this, R.drawable.curve_background_blue)
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, SellFragment())
-                        .commit()
-                    true
+                .addOnFailureListener { err ->
+                    Toast.makeText(this, "Error connecting to the database: ${err.localizedMessage}", Toast.LENGTH_SHORT).show()
                 }
-                else -> false
-            }
-
         }
 
 //        val productRecyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.productsRecyclerView)
@@ -225,6 +215,14 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.addressText).text =
                     defaultAddress?.get("addressLine")?.toString() ?: "No address selected"
             }
+    }
+
+    private fun loadFragment(fragment: Fragment, themeColor: Int){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragment)
+            .commit()
+
+        curve.background = ContextCompat.getDrawable(this, themeColor)
     }
 
     override fun onResume() {
