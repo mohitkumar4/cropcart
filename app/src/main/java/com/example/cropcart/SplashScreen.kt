@@ -6,12 +6,15 @@ import android.os.Handler
 import android.os.Looper
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.cropcart.account.AccountTypeSelection
 import com.example.cropcart.account.LoginActivity
+import com.example.cropcart.firebase.FirebaseRepo
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashScreen : AppCompatActivity() {
@@ -26,8 +29,8 @@ class SplashScreen : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if(isLoggedIn()) startActivity(Intent(this, MainActivity::class.java))
-            else startActivity(Intent(this, LoginActivity::class.java))
+            val activity = if (isLoggedIn()) AccountTypeSelection::class.java else LoginActivity::class.java
+            startActivity(Intent(this, activity))
             finish()
         }, 2000)
 
@@ -38,8 +41,5 @@ class SplashScreen : AppCompatActivity() {
         }
     }
 
-    private fun isLoggedIn(): Boolean {
-        val currentAuth = FirebaseAuth.getInstance().currentUser
-        return currentAuth != null
-    }
+    private fun isLoggedIn(): Boolean = FirebaseAuth.getInstance().currentUser != null
 }

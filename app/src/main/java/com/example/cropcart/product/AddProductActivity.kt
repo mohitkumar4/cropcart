@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.cropcart.R
+import com.example.cropcart.firebase.FirebaseRepo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -141,7 +142,7 @@ class AddProductActivity : AppCompatActivity() {
                         )
 
                         // Step 3: Push to Firestore
-                        db.collection("products")
+                        db.collection(FirebaseRepo.Key.collectionProducts)
                             .add(product)
                             .addOnSuccessListener {
                                 Toast.makeText(

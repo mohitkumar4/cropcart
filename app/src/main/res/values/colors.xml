@@ -11,7 +11,9 @@
 
     <color name="background_base">#c5c5c5</color>
     <color name="background_lighter">#eeeeee</color>
-    <color name="primary_base">#81C784</color>
+    <color name="background_darker">#222222</color>
+    <color name="primary_base">#4CAF50</color>
+    <color name="secondary_base">#2196F3</color>
 
     <color name="text_base">#222222</color>
 

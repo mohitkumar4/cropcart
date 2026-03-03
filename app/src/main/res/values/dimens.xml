@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_name">24sp</dimen>
+    <dimen name="content_primary_text">16sp</dimen>
+    <dimen name="content_secondary_text">12sp</dimen>
+
+    <dimen name="activityPaddingHorizontal">8dp</dimen>
+    <dimen name="activityPaddingVertical">16dp</dimen>
+
+    <dimen name="account_type_selection_image">128dp</dimen>
+
+</resources>

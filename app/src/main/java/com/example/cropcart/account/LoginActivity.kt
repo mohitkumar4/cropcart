@@ -3,6 +3,7 @@ package com.example.cropcart.account
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -13,8 +14,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.cropcart.MainActivity
 import com.example.cropcart.R
+import com.example.cropcart.firebase.FirebaseRepo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -48,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.INVISIBLE
                 return@setOnClickListener
             }
            loginUser(email, password)
@@ -68,17 +70,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginUser(email: String, password: String)
-    {
+    private fun loginUser(email: String, password: String) {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task->
-                if(task.isSuccessful)
-                {
+                if(task.isSuccessful) {
                     val userId = mAuth.currentUser?.uid
                     if(userId != null) fetchUserData(userId)
-                }
-                else
-                {
+                } else {
                     progressBar.visibility = ProgressBar.INVISIBLE
                     Toast.makeText(this, "Wrong Email or Password", Toast.LENGTH_LONG).show()
                     Log.e("LoginActivity", "Login failed: ${task.exception?.message}", task.exception)
@@ -86,20 +84,23 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun fetchUserData(userId : String)
-    {
-        db.collection("users").document(userId).get()
+    private fun fetchUserData(userId : String){
+        db.collection(FirebaseRepo.Key.collectionUsers).document(userId).get()
             .addOnSuccessListener { document ->
-                if(document.exists())
-                {
-                    val username = document.getString("username")
+                if(document.exists()) {
+                    val username = document.getString(FirebaseRepo.Key.username)
                     Toast.makeText(this, "Welcome, $username!", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, AccountTypeSelection::class.java))
                     finish()
+                }
+                else{
+                    Toast.makeText(this, "User does not exist", Toast.LENGTH_SHORT).show()
+                    progressBar.visibility = View.INVISIBLE
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to retrieve user data", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.INVISIBLE
             }
     }
 

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@drawable/background_gradient"
+    android:paddingHorizontal="@dimen/activityPaddingHorizontal"
+    android:paddingVertical="@dimen/activityPaddingVertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/checkerCtn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verifying account settings"
+            android:textAlignment="center"
+            app:preset="primary_text"
+            android:layout_marginBottom="40dp"
+            />
+
+        <ProgressBar
+            android:layout_width="128dp"
+            android:layout_height="24dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:indeterminateTint="@color/background_darker"
+            android:indeterminate="true"
+            />
+
+    </LinearLayout>
+
+    <com.example.cropcart.gui.text.SimpleTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Account type selection"
+        android:textAlignment="center"
+        app:preset="activity_name"
+        android:layout_marginBottom="40dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Who are you?"
+            android:textAlignment="center"
+            app:preset="primary_text"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="40dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/farmerCtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="0.45"
+                >
+
+                <ImageView
+                    android:id="@+id/imgFarmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/account_type_selection_image"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/baseline_grass_24"
+                    app:tint="@color/primary_base"
+                    />
+
+                <com.example.cropcart.gui.text.SimpleTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Farmer"
+                    android:textAlignment="center"
+                    app:preset="secondary_text"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="@dimen/account_type_selection_image"
+                android:background="@color/background_base"
+                />
+
+            <LinearLayout
+                android:id="@+id/customerCtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="0.45"
+                >
+
+                <ImageView
+                    android:id="@+id/imgCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/account_type_selection_image"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/secondary_base"
+                    android:src="@drawable/baseline_shopping_cart_24"
+                    />
+
+                <com.example.cropcart.gui.text.SimpleTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Customer"
+                    android:textAlignment="center"
+                    app:preset="secondary_text"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="128dp"
+            android:layout_height="24dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:indeterminateTint="@color/background_darker"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

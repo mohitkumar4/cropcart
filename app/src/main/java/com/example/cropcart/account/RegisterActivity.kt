@@ -13,8 +13,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.cropcart.MainActivity
 import com.example.cropcart.R
+import com.example.cropcart.firebase.FirebaseRepo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -40,7 +40,6 @@ class RegisterActivity : AppCompatActivity() {
 
 
         registerBtn.setOnClickListener {
-
             val email = emailField.text.toString().trim()
             val password = passwordField.text.toString().trim()
             val username = usernameField.text.toString().trim()
@@ -59,17 +58,17 @@ class RegisterActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val userId = mAuth.currentUser?.uid ?: return@addOnCompleteListener
                         val user = hashMapOf(
-                            "username" to username,
-                            "email" to email
+                            FirebaseRepo.Key.username to username,
+                            FirebaseRepo.Key.email to email
                         )
 
-
-
-                        db.collection("users").document(userId).set(user)
+                        db.collection(FirebaseRepo.Key.collectionUsers)
+                            .document(userId)
+                            .set(user)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show()
                                 Log.d("RegisterActivity", "Username saved successfully")
-                                startActivity(Intent(this, MainActivity::class.java))
+                                startActivity(Intent(this, AccountTypeSelection::class.java))
                                 finish()
                             }
                             .addOnFailureListener {

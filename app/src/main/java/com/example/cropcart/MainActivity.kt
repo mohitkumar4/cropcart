@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.example.cropcart.account.ProfilePageActivity
 import com.example.cropcart.address.ManageAddressesActivity
 import com.example.cropcart.cart.CartActivity
+import com.example.cropcart.firebase.FirebaseRepo
 import com.example.cropcart.section.BuyFragment
 import com.example.cropcart.seller.SellFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -57,11 +58,9 @@ class MainActivity : AppCompatActivity() {
 
 
         if(savedInstanceState == null) {
-
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, BuyFragment())
                 .commit()
-
         }
 
         bottomNav.setOnItemSelectedListener {
@@ -147,8 +146,6 @@ class MainActivity : AppCompatActivity() {
 
         val initials = actionView?.findViewById<TextView>(R.id.profileInitials)
 
-        // Example: load image from URL using Glide
-
         Log.d("id", "${item.itemId}")
         Log.d("id", "${actionView?.id}")
 
@@ -157,17 +154,12 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
-
     profileIcon?.let {
-
-
         var userName = "Master User"
         val userProfileUrl: String? = null // replace with real URL if available
 
-        db.collection("users").document(userId).get().addOnSuccessListener {
-            userName = it["username"] as String
-
+        db.collection(FirebaseRepo.Key.collectionUsers).document(userId).get().addOnSuccessListener {
+            userName = it[FirebaseRepo.Key.username] as String
 
             if (!userProfileUrl.isNullOrEmpty()) {
                 // Show profile picture
@@ -228,7 +220,7 @@ class MainActivity : AppCompatActivity() {
         db.collection("users").document(userId)
             .get()
             .addOnSuccessListener { doc ->
-                val addresses = doc["addresses"] as? List<Map<String, Any>> ?: return@addOnSuccessListener
+                val addresses = doc[FirebaseRepo.Key.addresses] as? List<Map<String, Any>> ?: return@addOnSuccessListener
                 val defaultAddress = addresses.find { it["isDefault"] == true }
                 findViewById<TextView>(R.id.addressText).text =
                     defaultAddress?.get("addressLine")?.toString() ?: "No address selected"
@@ -239,7 +231,4 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         loadDefaultAddress()
     }
-
-
-
 }

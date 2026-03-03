@@ -25,25 +25,17 @@ class ProfilePageActivity : AppCompatActivity() {
     private val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
     private val db = FirebaseFirestore.getInstance()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_profile_page)
 
         val back = findViewById<ImageView>(R.id.ivBack)
-
         val logoutButton = findViewById<MaterialButton>(R.id.logoutButton)
-
         val profileIcon = findViewById<CircleImageView>(R.id.profileIcon)
-
         val yourorders = findViewById<CardView>(R.id.yourorders)
-
         val profileName = findViewById<TextView>(R.id.profileName)
-
         val yourAddresses = findViewById<CardView>(R.id.youraddress)
-
-
 
         db.collection("users").document(userId).get().addOnSuccessListener {
             profileName.text = it["username"] as String
@@ -61,21 +53,17 @@ class ProfilePageActivity : AppCompatActivity() {
 
         setUpPFP(profileIcon)
 
-
-
         logoutButton.setOnClickListener {
-
             FirebaseAuth.getInstance().signOut()
-            startActivity(Intent(this, LoginActivity::class.java))
+            var intent = Intent(this, LoginActivity::class.java).apply{
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
             finish()
-
         }
 
-
         back.setOnClickListener {
-
             finish()
-
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -88,8 +76,6 @@ class ProfilePageActivity : AppCompatActivity() {
     private fun setUpPFP(profileIcon : CircleImageView)
     {
         val initials = findViewById<TextView>(R.id.profileInitials)
-
-//        val userName = "Master User"
 
         var userName = "Master User"
 
