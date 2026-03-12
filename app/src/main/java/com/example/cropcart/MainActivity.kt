@@ -22,6 +22,7 @@ import com.example.cropcart.account.ProfilePageActivity
 import com.example.cropcart.address.ManageAddressesActivity
 import com.example.cropcart.cart.CartActivity
 import com.example.cropcart.firebase.FirebaseRepo
+import com.example.cropcart.news.NewsActivity
 import com.example.cropcart.section.BuyFragment
 import com.example.cropcart.seller.SellFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -133,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         val actionView = item.actionView
         val profileIcon = actionView?.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.profileIcon)
         val cartIcon = menu.findItem(R.id.menu_cart)
+        val newsIcon = menu.findItem(R.id.menu_news)
 
         val initials = actionView?.findViewById<TextView>(R.id.profileInitials)
 
@@ -143,48 +145,51 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, CartActivity::class.java))
             true
         }
-
-    profileIcon?.let {
-        var userName = "Master User"
-        val userProfileUrl: String? = null // replace with real URL if available
-
-        db.collection(FirebaseRepo.Key.collectionUsers).document(userId).get().addOnSuccessListener {
-            userName = it[FirebaseRepo.Key.username] as String
-
-            if (!userProfileUrl.isNullOrEmpty()) {
-                // Show profile picture
-                initials?.visibility = View.GONE
-                profileIcon.visibility = View.VISIBLE
-
-
-                Glide.with(this)
-                    .load("https://example.com/user/profile.jpg")  // user’s pfp URL
-                    .placeholder(R.drawable.person)       // fallback
-                    .into(profileIcon)
-
-            } else {
-                // Show initials
-                profileIcon.visibility = View.GONE
-                initials?.visibility = View.VISIBLE
-
-                fun getInitials(name: String): String {
-                    val parts = name.trim().split(" ")
-                    return if (parts.size == 1) {
-                        parts[0].first().uppercaseChar().toString()
-                    } else {
-                        "${parts[0].first().uppercaseChar()}${parts[1].first().uppercaseChar()}"
-                    }
-                }
-
-                initials?.text = getInitials(userName)
-            }
+        newsIcon.setOnMenuItemClickListener{
+            startActivity(Intent(this, NewsActivity::class.java))
+            true
         }
-            .addOnFailureListener {
-                Log.e("userName Error", it.message.toString())
-                userName = "Master User"
-            }
 
-    }
+        profileIcon?.let {
+            var userName = "Master User"
+            val userProfileUrl: String? = null // replace with real URL if available
+
+            db.collection(FirebaseRepo.Key.collectionUsers).document(userId).get().addOnSuccessListener {
+                userName = it[FirebaseRepo.Key.username] as String
+
+                if (!userProfileUrl.isNullOrEmpty()) {
+                    // Show profile picture
+                    initials?.visibility = View.GONE
+                    profileIcon.visibility = View.VISIBLE
+
+
+                    Glide.with(this)
+                        .load("https://example.com/user/profile.jpg")  // user’s pfp URL
+                        .placeholder(R.drawable.person)       // fallback
+                        .into(profileIcon)
+
+                } else {
+                    // Show initials
+                    profileIcon.visibility = View.GONE
+                    initials?.visibility = View.VISIBLE
+
+                    fun getInitials(name: String): String {
+                        val parts = name.trim().split(" ")
+                        return if (parts.size == 1) {
+                            parts[0].first().uppercaseChar().toString()
+                        } else {
+                            "${parts[0].first().uppercaseChar()}${parts[1].first().uppercaseChar()}"
+                        }
+                    }
+
+                    initials?.text = getInitials(userName)
+                }
+            }
+                .addOnFailureListener {
+                    Log.e("userName Error", it.message.toString())
+                    userName = "Master User"
+                }
+        }
 
 
 

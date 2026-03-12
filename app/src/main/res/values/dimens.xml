@@ -9,4 +9,6 @@
 
     <dimen name="account_type_selection_image">128dp</dimen>
 
+    <dimen name="news_list_item_padding">12dp</dimen>
+
 </resources>

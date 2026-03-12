@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@drawable/background_gradient"
+    android:paddingVertical="@dimen/activityPaddingVertical"
+    android:paddingHorizontal="@dimen/activityPaddingHorizontal"
+    >
+
+    <com.example.cropcart.gui.text.SimpleTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="News"
+        android:textAlignment="center"
+        app:preset="activity_name"
+        />
+
+    <com.example.cropcart.gui.text.SimpleTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Latest"
+        android:textAlignment="center"
+        app:preset="primary_text"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+</LinearLayout>
