@@ -22,7 +22,7 @@ import com.example.cropcart.account.ProfilePageActivity
 import com.example.cropcart.address.ManageAddressesActivity
 import com.example.cropcart.cart.CartActivity
 import com.example.cropcart.firebase.FirebaseRepo
-import com.example.cropcart.news.NewsActivity
+import com.example.cropcart.information.InformationActivity
 import com.example.cropcart.section.BuyFragment
 import com.example.cropcart.seller.SellFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -134,7 +134,9 @@ class MainActivity : AppCompatActivity() {
         val actionView = item.actionView
         val profileIcon = actionView?.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.profileIcon)
         val cartIcon = menu.findItem(R.id.menu_cart)
-        val newsIcon = menu.findItem(R.id.menu_news)
+        val newsIcon = menu.findItem(R.id.menu_information)
+        cartIcon.setIconTintList(getColorStateList(R.color.background_base))
+        newsIcon.setIconTintList(getColorStateList(R.color.background_base))
 
         val initials = actionView?.findViewById<TextView>(R.id.profileInitials)
 
@@ -146,7 +148,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
         newsIcon.setOnMenuItemClickListener{
-            startActivity(Intent(this, NewsActivity::class.java))
+            startActivity(Intent(this, InformationActivity::class.java))
             true
         }
 

@@ -1,24 +1,30 @@
-package com.example.cropcart.news
+package com.example.cropcart.information
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.BuildConfig
 import com.example.cropcart.R
-import com.example.cropcart.news.apitube.ApiTubeService
-import com.example.cropcart.news.apitube.ApitubeArticleAdapter
-import com.example.cropcart.news.mediastack.MediaStackArticleAdapter
-import com.example.cropcart.news.mediastack.MediaStackService
+import com.example.cropcart.information.apitube.ApiTubeService
+import com.example.cropcart.information.apitube.ApitubeArticleAdapter
+import com.example.cropcart.information.mediastack.MediaStackArticleAdapter
+import com.example.cropcart.information.mediastack.MediaStackService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class NewsActivity : AppCompatActivity() {
+class NewsFragment : Fragment() {
+    // views
+    private lateinit var frg: View
+
     // apitube
     private lateinit var rvApitube: RecyclerView
     private lateinit var adapterApitube: ApitubeArticleAdapter
@@ -28,22 +34,27 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var rvMediaStack: RecyclerView
     private lateinit var adapterMediaStack: MediaStackArticleAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        frg = LayoutInflater.from(requireContext()).inflate(R.layout.fragment_news, container, false)
 
-        rvApitube = findViewById<RecyclerView>(R.id.rvApitube)
-        adapterApitube = ApitubeArticleAdapter(this, listOf())
+        rvApitube = frg.findViewById<RecyclerView>(R.id.rvApitube)
+        adapterApitube = ApitubeArticleAdapter(requireContext(), listOf())
         rvApitube.adapter = adapterApitube
-        rvApitube.layoutManager = LinearLayoutManager(this)
+        rvApitube.layoutManager = LinearLayoutManager(requireContext())
 
-        rvMediaStack = findViewById<RecyclerView>(R.id.rvMediaStack)
-        adapterMediaStack = MediaStackArticleAdapter(this, listOf())
+        rvMediaStack = frg.findViewById<RecyclerView>(R.id.rvMediaStack)
+        adapterMediaStack = MediaStackArticleAdapter(requireContext(), listOf())
         rvMediaStack.adapter = adapterMediaStack
-        rvMediaStack.layoutManager = LinearLayoutManager(this)
+        rvMediaStack.layoutManager = LinearLayoutManager(requireContext())
 
         lifecycleScope.launch{ getNewsFromApitube() }
         lifecycleScope.launch{ getNewsFromMediaStack() }
+
+        return frg
     }
 
     suspend private fun getNewsFromApitube(){
@@ -63,7 +74,6 @@ class NewsActivity : AppCompatActivity() {
             if (response.results.isNotEmpty()) adapterApitube.updateData(response.results)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -92,9 +102,6 @@ class NewsActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@NewsActivity, "MediaStack Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 }

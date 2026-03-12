@@ -1,4 +1,4 @@
-package com.example.cropcart.news.apitube
+package com.example.cropcart.information.apitube
 
 import android.content.Context
 import android.view.LayoutInflater

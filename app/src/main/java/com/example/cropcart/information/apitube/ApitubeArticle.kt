@@ -1,4 +1,4 @@
-package com.example.cropcart.news.apitube
+package com.example.cropcart.information.apitube
 
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.example.cropcart.news.mediastack
+package com.example.cropcart.information.mediastack
 
 import android.content.Context
 import android.view.LayoutInflater

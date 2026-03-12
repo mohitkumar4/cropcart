@@ -1,4 +1,4 @@
-package com.example.cropcart.news.mediastack
+package com.example.cropcart.information.mediastack
 
 import retrofit2.http.GET
 import retrofit2.http.Query

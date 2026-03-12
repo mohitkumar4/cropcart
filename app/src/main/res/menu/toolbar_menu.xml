@@ -6,13 +6,16 @@
         android:id="@+id/menu_cart"
         android:icon="@drawable/shopping_cart"
         android:title="Settings"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:iconTint="@color/background_base"
+        />
 
     <item
-        android:id="@+id/menu_news"
-        android:title="News"
+        android:id="@+id/menu_information"
+        android:title="Information"
         app:showAsAction="always"
         android:icon="@drawable/baseline_newspaper_24"
+        android:iconTint="@color/background_base"
         />
 
     <item
