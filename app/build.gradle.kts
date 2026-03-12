@@ -30,8 +30,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val apiKey = localProperties.getProperty("ATITUBE_API") ?: ""
-        buildConfigField("String", "ATITUBE_API", "\"$apiKey\"")
+        val apitubeApiKey = localProperties.getProperty("APITUBE_API") ?: ""
+        val mediaStackApiKey = localProperties.getProperty("MEDIASTACK_API") ?: ""
+        buildConfigField("String", "APITUBE_API", "\"$apitubeApiKey\"")
+        buildConfigField("String", "MEDIASTACK_API", "\"$mediaStackApiKey\"")
     }
 
     buildFeatures {

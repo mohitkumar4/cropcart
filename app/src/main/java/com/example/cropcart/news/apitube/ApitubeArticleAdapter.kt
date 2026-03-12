@@ -1,4 +1,4 @@
-package com.example.cropcart.news
+package com.example.cropcart.news.apitube
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -18,8 +18,19 @@ class ApitubeArticleAdapter(private val context: Context, private var articles: 
         fun bind(item: ApitubeArticle){
             titleV.text = item.title
             descV.text = item.description
-            publishedAtV.text = item.published_at
-            sourceV.text = item.source.name
+            setMetaData(publishedAtV, item.published_at, "Published date")
+            setMetaData(sourceV, item.source.name, "Source")
+        }
+
+        private fun setMetaData(textView: SimpleTextView, property: String?, indicatorText: String){
+            if (property.isNullOrEmpty()){
+                textView.text = ""
+                textView.visibility = View.GONE
+            }
+            else{
+                textView.text = "${indicatorText}: ${property}"
+                textView.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -27,11 +38,11 @@ class ApitubeArticleAdapter(private val context: Context, private var articles: 
         parent: ViewGroup,
         viewType: Int
     ): ItemViewHolder {
-        return ItemViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_article, parent, false))
+        return ItemViewHolder(LayoutInflater.from(context).inflate(R.layout.list_item_apitube_article, parent, false))
     }
 
     override fun onBindViewHolder(
-        holder: ApitubeArticleAdapter.ItemViewHolder,
+        holder: ItemViewHolder,
         position: Int
     ) {
         holder.bind(articles[position])

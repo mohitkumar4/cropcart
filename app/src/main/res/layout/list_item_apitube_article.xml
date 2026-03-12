@@ -39,7 +39,6 @@
             android:layout_height="wrap_content"
             android:text="Source"
             app:preset="secondary_text"
-            android:layout_marginBottom="8dp"
             />
 
         <com.example.cropcart.gui.text.SimpleTextView
@@ -48,6 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Description"
             app:preset="secondary_text"
+            android:layout_marginTop="8dp"
             />
 
     </LinearLayout>

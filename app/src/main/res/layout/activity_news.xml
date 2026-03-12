@@ -21,16 +21,38 @@
     <com.example.cropcart.gui.text.SimpleTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Latest"
+        android:text="From MediaStack"
         android:textAlignment="center"
         app:preset="primary_text"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
+        android:id="@+id/rvMediaStack"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/background_darker"
+        android:layout_marginVertical="8dp"
+        />
+
+    <com.example.cropcart.gui.text.SimpleTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="From Apitube"
+        android:textAlignment="center"
+        app:preset="primary_text"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvApitube"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
         />
 
 </LinearLayout>

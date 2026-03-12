@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="4dp"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/news_list_item_padding"
+        >
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            app:preset="primary_text"
+            />
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:id="@+id/publishedAt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Published at"
+            android:textStyle="italic"
+            app:preset="secondary_text"
+            />
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:id="@+id/source"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Source"
+            app:preset="secondary_text"
+            />
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Author"
+            app:preset="secondary_text"
+            />
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:id="@+id/desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            app:preset="secondary_text"
+            android:layout_marginTop="8dp"
+            />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
