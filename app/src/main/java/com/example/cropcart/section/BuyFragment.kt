@@ -11,8 +11,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.R
+import com.example.cropcart.firebase.FirebaseRepo
 import com.example.cropcart.search.SearchActivity
 import com.example.cropcart.product.FeaturedProduct
+import com.example.cropcart.product.ProductRepo
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -181,7 +183,7 @@ class BuyFragment : Fragment() {
     }
 
     private fun fetchProductsFromFirestore() {
-        db.collection("products")
+        db.collection(FirebaseRepo.Key.collectionProducts)
             .get()
             .addOnSuccessListener { result ->
                 val products = mutableListOf<FeaturedProduct>()
@@ -210,21 +212,18 @@ class BuyFragment : Fragment() {
     }
 
     private fun updateSections(filteredProducts: List<FeaturedProduct>) {
-        val sectionNames = listOf(
-            "Fresh Produce", "Dried", "Processed",
-            "Organic", "Non-organic", "Hybrid Seeds",
-            "Raw Material", "Animal Feed Quality"
-        )
+        val sectionNames = ProductRepo.Sections.getSectionNames()
 
         val sections = sectionNames.mapNotNull { section ->
             val productsInSection = filteredProducts.filter { it.section == section }
-            if (productsInSection.isNotEmpty())
+            if (productsInSection.isNotEmpty()) {
                 Section(section, productsInSection)
-            else null
+            }
+            else{
+                null
+            }
         }
 
         sectionAdapter.submitList(sections)
     }
-
-
 }

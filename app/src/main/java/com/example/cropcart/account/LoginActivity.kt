@@ -73,13 +73,14 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUser(email: String, password: String) {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task->
+                progressBar.visibility = ProgressBar.INVISIBLE
                 if(task.isSuccessful) {
                     val userId = mAuth.currentUser?.uid
                     if(userId != null) fetchUserData(userId)
                 } else {
-                    progressBar.visibility = ProgressBar.INVISIBLE
-                    Toast.makeText(this, "Wrong Email or Password", Toast.LENGTH_LONG).show()
-                    Log.e("LoginActivity", "Login failed: ${task.exception?.message}", task.exception)
+                    val errorMessage = task.exception?.localizedMessage ?: "Login failed"
+                    Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_LONG).show()
+                    Log.e("LoginActivity", "Login error", task.exception)
                 }
             }
     }

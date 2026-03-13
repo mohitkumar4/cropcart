@@ -13,8 +13,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.cropcart.R
+import com.example.cropcart.product.ProductRepo.Sections
 import com.google.firebase.firestore.FirebaseFirestore
-
 
 class EditProductActivity : AppCompatActivity() {
 
@@ -22,7 +22,7 @@ class EditProductActivity : AppCompatActivity() {
     private lateinit var nameField: EditText
     private lateinit var priceField: EditText
     private lateinit var radioCategoryGroup: RadioGroup
-    private lateinit var sectionField: EditText
+    private lateinit var radioSectionGroup: RadioGroup
     private lateinit var quantityField: EditText
     private lateinit var descriptionField: EditText
     private lateinit var imageUrlField: EditText
@@ -32,12 +32,11 @@ class EditProductActivity : AppCompatActivity() {
     private var productId: String? = null
     private var existingImageUrl: String? = null
 
-
     private lateinit var selectedCategory: ProductRepo.Category
+    private var selectedSection: String = ProductRepo.Sections.others
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_edit_product)
 
         setupKeyboardAvoidance()
@@ -46,7 +45,6 @@ class EditProductActivity : AppCompatActivity() {
             val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
             val sysInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
-            // Add bottom padding equal to keyboard height when visible
             view.setPadding(
                 sysInsets.left,
                 sysInsets.top,
@@ -77,7 +75,22 @@ class EditProductActivity : AppCompatActivity() {
                 else -> ProductRepo.Categories.others
             }
         }
-        sectionField = findViewById(R.id.editProductSection)
+
+        radioSectionGroup = findViewById(R.id.radioSectionGroup)
+        radioSectionGroup.setOnCheckedChangeListener { _, checkedId ->
+            selectedSection = when (checkedId) {
+                R.id.radioFreshProduce -> Sections.freshProduce
+                R.id.radioDried -> Sections.dried
+                R.id.radioProcessed -> Sections.processed
+                R.id.radioOrganic -> Sections.organic
+                R.id.radioNonOrganic -> Sections.nonOrganic
+                R.id.radioHybridSeeds -> Sections.hybridSeeds
+                R.id.radioRawMaterial -> Sections.rawMaterial
+                R.id.radioAnimalFeed -> Sections.animalFeed
+                else -> Sections.others
+            }
+        }
+
         quantityField = findViewById(R.id.editProductQuantity)
         descriptionField = findViewById(R.id.editProductDescription)
         imageUrlField = findViewById(R.id.editProductImageUrl)
@@ -104,7 +117,7 @@ class EditProductActivity : AppCompatActivity() {
                     nameField.setText(product?.name)
                     priceField.setText(product?.price.toString())
 
-                    val category = when(product?.category) {
+                    val categoryId = when(product?.category) {
                         ProductRepo.Categories.all.name -> R.id.radioAll
                         ProductRepo.Categories.cereals.name -> R.id.radioCereals
                         ProductRepo.Categories.pulses.name -> R.id.radioPulses
@@ -116,8 +129,21 @@ class EditProductActivity : AppCompatActivity() {
                         ProductRepo.Categories.others.name -> R.id.radioOthers
                         else -> R.id.radioOthers
                     }
-                    radioCategoryGroup.check(category)
-                    sectionField.setText(product?.section)
+                    radioCategoryGroup.check(categoryId)
+
+                    val sectionId = when(product?.section) {
+                        Sections.freshProduce -> R.id.radioFreshProduce
+                        Sections.dried -> R.id.radioDried
+                        Sections.processed -> R.id.radioProcessed
+                        Sections.organic -> R.id.radioOrganic
+                        Sections.nonOrganic -> R.id.radioNonOrganic
+                        Sections.hybridSeeds -> R.id.radioHybridSeeds
+                        Sections.rawMaterial -> R.id.radioRawMaterial
+                        Sections.animalFeed -> R.id.radioAnimalFeed
+                        else -> R.id.radioOthers
+                    }
+                    radioSectionGroup.check(sectionId)
+
                     quantityField.setText(product?.quantity.toString())
                     descriptionField.setText(product?.description)
                     imageUrlField.setText(product?.image)
@@ -138,12 +164,12 @@ class EditProductActivity : AppCompatActivity() {
         val name = nameField.text.toString().trim()
         val price = priceField.text.toString().trim()
         val category = selectedCategory.name.trim()
-        val section = sectionField.text.toString().trim()
+        val section = selectedSection
         val quantity = quantityField.text.toString().trim()
         val description = descriptionField.text.toString().trim()
         val imageUrl = imageUrlField.text.toString().trim()
 
-        if (name.isEmpty() || price.isEmpty() || category.isEmpty() || section.isEmpty() || quantity.isEmpty() || description.isEmpty()) {
+        if (name.isEmpty() || price.isEmpty() || category.isEmpty() || quantity.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "Please fill all fields correctly", Toast.LENGTH_SHORT).show()
             return
         }
@@ -179,8 +205,6 @@ class EditProductActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to update product: ${it.message}", Toast.LENGTH_SHORT).show()
             }
-
-        finish()
     }
 
     private fun setupKeyboardAvoidance() {
@@ -192,7 +216,6 @@ class EditProductActivity : AppCompatActivity() {
             val screenHeight = scrollView.rootView.height
             val keypadHeight = screenHeight - r.bottom
 
-            // if keyboard is visible
             if (keypadHeight > screenHeight * 0.15) {
                 scrollView.post {
                     val focused = currentFocus
@@ -203,5 +226,4 @@ class EditProductActivity : AppCompatActivity() {
             }
         }
     }
-
 }

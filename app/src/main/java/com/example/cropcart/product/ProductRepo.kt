@@ -25,4 +25,28 @@ object ProductRepo {
 
         fun getCategoryNames(): Array<String> = categories.map { it.name }.toTypedArray()
     }
+
+    object Sections {
+        val freshProduce = "Fresh Produce"
+        val dried = "Dried"
+        val processed = "Processed"
+        val organic = "Organic"
+        val nonOrganic = "Non-organic"
+        val hybridSeeds = "Hybrid Seeds"
+        val rawMaterial = "Raw Material"
+        val animalFeed = "Animal Feed Quality"
+        val others = "Others"
+
+        private val sections: List<String> = listOf(
+            freshProduce, dried, processed,
+            organic, nonOrganic, hybridSeeds,
+            rawMaterial, animalFeed, others
+        )
+
+        fun getSection(sectionName: String?): String {
+            return sections.find { it.equals(sectionName, ignoreCase = true) } ?: others
+        }
+
+        fun getSectionNames(): Array<String> = sections.toTypedArray()
+    }
 }

@@ -180,22 +180,69 @@
 
         </RadioGroup>
 
-        <!-- Section -->
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Section"
+            android:text="Select Section"
             android:textStyle="bold"
-            android:textSize="14sp"
-            android:textColor="#555555" />
+            android:layout_marginBottom="8dp" />
 
-        <EditText
-            android:id="@+id/editProductSection"
+        <RadioGroup
+            android:id="@+id/radioSectionGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="e.g. Organic, Dried"
-            android:inputType="text"
-            android:layout_marginBottom="16dp" />
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+
+            <RadioButton
+                android:id="@+id/radioFreshProduce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fresh Produce" />
+
+            <RadioButton
+                android:id="@+id/radioDried"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dried" />
+
+            <RadioButton
+                android:id="@+id/radioProcessed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Processed" />
+
+            <RadioButton
+                android:id="@+id/radioOrganic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Organic" />
+
+            <RadioButton
+                android:id="@+id/radioNonOrganic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Non-organic" />
+
+            <RadioButton
+                android:id="@+id/radioHybridSeeds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hybrid Seeds" />
+
+            <RadioButton
+                android:id="@+id/radioRawMaterial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Raw Material" />
+
+            <RadioButton
+                android:id="@+id/radioAnimalFeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Animal Feed Quality" />
+
+        </RadioGroup>
 
         <!-- Quantity -->
         <TextView

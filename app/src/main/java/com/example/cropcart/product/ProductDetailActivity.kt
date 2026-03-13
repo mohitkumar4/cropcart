@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cropcart.R
+import com.example.cropcart.firebase.FirebaseRepo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -72,9 +73,7 @@ class ProductDetailActivity : AppCompatActivity() {
             return
         }
 
-
-
-        db.collection("products").document(productId)
+        db.collection(FirebaseRepo.Key.collectionProducts).document(productId)
             .get()
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {

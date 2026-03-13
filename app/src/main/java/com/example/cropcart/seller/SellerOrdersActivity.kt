@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.R
 import com.example.cropcart.cart.CartItem
+import com.example.cropcart.firebase.FirebaseRepo
 import com.example.cropcart.orders.Order
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,7 +40,7 @@ class SellerOrdersActivity : AppCompatActivity() {
     }
 
     private fun loadOrdersForSeller() {
-        db.collection("orders")
+        db.collection(FirebaseRepo.Key.collectionOrders)
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
