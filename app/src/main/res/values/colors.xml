@@ -12,7 +12,13 @@
     <color name="background_base">#c5c5c5</color>
     <color name="background_lighter">#eeeeee</color>
     <color name="background_darker">#444444</color>
+
+    <color name="background_base_primary">#aCfFb0</color>
+    <color name="background_lighter_primary">#eCeFe0</color>
+    <color name="background_darker_primary">#7CcF80</color>
+
     <color name="primary_base">#4CAF50</color>
+    <color name="primary_darker">#1C7F20</color>
     <color name="secondary_base">#2196F3</color>
 
     <color name="text_base">#222222</color>

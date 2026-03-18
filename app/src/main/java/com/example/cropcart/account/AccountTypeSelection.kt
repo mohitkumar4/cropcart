@@ -74,7 +74,6 @@ class AccountTypeSelection : AppCompatActivity() {
             }
     }
 
-
     private fun next(){
         startActivity(Intent(this, MainActivity::class.java))
         finish()

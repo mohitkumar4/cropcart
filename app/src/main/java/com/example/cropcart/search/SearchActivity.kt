@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.GeminiSearchHelper
 import com.example.cropcart.R
+import com.example.cropcart.firebase.FirebaseRepo
 import com.example.cropcart.product.FeaturedProduct
 import com.example.cropcart.product.ProductDetailActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -153,7 +154,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun fallbackSearch(query: String) {
         val lowercaseQuery = query.lowercase()
-        db.collection("products")
+        db.collection(FirebaseRepo.Key.collectionProducts)
             .get()
             .addOnSuccessListener { result ->
                 productList.clear()
