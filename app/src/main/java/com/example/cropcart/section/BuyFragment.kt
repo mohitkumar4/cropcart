@@ -7,11 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.R
 import com.example.cropcart.firebase.FirebaseRepo
+import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
+import com.example.cropcart.gui.text.SimpleTextView
 import com.example.cropcart.search.SearchActivity
 import com.example.cropcart.product.FeaturedProduct
 import com.example.cropcart.product.ProductRepo
@@ -31,7 +36,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class BuyFragment : Fragment() {
 
-    lateinit var sectionAdapter : SectionAdapter
+    private lateinit var sectionAdapter : SectionAdapter
+    private lateinit var sectionsRecyclerView: RecyclerView
+    private lateinit var noProductsCtn: SimpleTextView
 
     private var allProducts = mutableListOf<FeaturedProduct>()
 
@@ -43,7 +50,9 @@ class BuyFragment : Fragment() {
         // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_buy, container, false)
-        val sectionsRecyclerView = view.findViewById<RecyclerView>(R.id.sectionsRecyclerView)
+        view.findViewById<LinearLayout>(R.id.mainCardLinearLayout).setTiledBackground(R.drawable.pattern_autumn, 0.25f, 0.05f)
+        sectionsRecyclerView = view.findViewById<RecyclerView>(R.id.sectionsRecyclerView)
+        noProductsCtn = view.findViewById<SimpleTextView>(R.id.noProductsCtn)
 
 //        val productRecyclerView = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.productsRecyclerView)
 //        val organicRecyclerView = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.OrganicProductsRecyclerView)
@@ -225,5 +234,20 @@ class BuyFragment : Fragment() {
         }
 
         sectionAdapter.submitList(sections)
+
+        if (sections.isEmpty()){
+            sectionsRecyclerView.clearAnimation()
+            sectionsRecyclerView.visibility = View.GONE
+
+            noProductsCtn.visibility = View.VISIBLE
+            noProductsCtn.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.quick_fade_in))
+        }
+        else{
+            noProductsCtn.clearAnimation()
+            noProductsCtn.visibility = View.GONE
+
+            sectionsRecyclerView.visibility = View.VISIBLE
+            sectionsRecyclerView.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.quick_fade_in))
+        }
     }
 }

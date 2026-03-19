@@ -24,4 +24,6 @@
 
     <color name="text_base">#222222</color>
 
+    <color name="status_error">#882222</color>
+
 </resources>

@@ -32,7 +32,7 @@
             android:background="@android:color/transparent"
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorColor="@color/black"
-            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorHeight="2dp"
             app:tabTextColor="@color/white"
             app:tabIconTint="@null"
             app:tabSelectedTextColor="@color/black"
@@ -61,20 +61,39 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="4dp"
-        android:layout_margin="12dp"
+        android:layout_marginHorizontal="12dp"
         app:cardElevation="2dp"
         app:cardCornerRadius="4dp"
         >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sectionsRecyclerView"
+        <LinearLayout
+            android:id="@+id/mainCardLinearLayout"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            android:gravity="center"
+            >
+            
+            <com.example.cropcart.gui.text.SimpleTextView
+                android:id="@+id/noProductsCtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No produce was found for this section"
+                app:preset="primary_text"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sectionsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -22,8 +22,8 @@
         app:cardBackgroundColor="@color/background_lighter"
         >
 
-        <LinearLayout
-            android:id="@+id/aiChatContentLinearLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/aiChatContentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="2dp"
@@ -34,13 +34,16 @@
                 android:id="@+id/msg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="msg"
                 android:textAlignment="viewEnd"
                 android:layout_marginHorizontal="8dp"
-                android:layout_gravity="center_vertical"
                 app:preset="secondary_text"
-                />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+            />
 
             <ImageView
                 android:id="@+id/icon"
@@ -48,9 +51,11 @@
                 android:layout_height="@dimen/ai_chat_icon_size"
                 android:src="@drawable/person"
                 android:padding="@dimen/ai_chat_icon_padding"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 

@@ -28,4 +28,9 @@ object AIRepo {
         .build()
 
     val apiService = retrofit.create(ApiService::class.java)
+
+    enum class MessageStatus(val value: Int) {
+        NORMAL(0),
+        ERROR(1),
+    }
 }
