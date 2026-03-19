@@ -18,6 +18,7 @@
     <color name="background_darker_primary">#7CcF80</color>
 
     <color name="primary_base">#4CAF50</color>
+    <color name="primary_lighter">#6CCF70</color>
     <color name="primary_darker">#1C7F20</color>
     <color name="secondary_base">#2196F3</color>
 

@@ -32,8 +32,10 @@ android {
 
         val apitubeApiKey = localProperties.getProperty("APITUBE_API") ?: ""
         val mediaStackApiKey = localProperties.getProperty("MEDIASTACK_API") ?: ""
+        val geminiApiKey = localProperties.getProperty("MEDIASTACK_API") ?: ""
         buildConfigField("String", "APITUBE_API", "\"$apitubeApiKey\"")
         buildConfigField("String", "MEDIASTACK_API", "\"$mediaStackApiKey\"")
+        buildConfigField("String", "GEMINI_API", "\"$geminiApiKey\"")
     }
 
     buildFeatures {

@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.cropcart.account.ProfilePageActivity
 import com.example.cropcart.address.ManageAddressesActivity
+import com.example.cropcart.ai.AIChatActivity
 import com.example.cropcart.cart.CartActivity
 import com.example.cropcart.firebase.FirebaseRepo
 import com.example.cropcart.information.InformationActivity
@@ -135,8 +136,11 @@ class MainActivity : AppCompatActivity() {
         val profileIcon = actionView?.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.profileIcon)
         val cartIcon = menu.findItem(R.id.menu_cart)
         val newsIcon = menu.findItem(R.id.menu_information)
+        val aiChatIcon = menu.findItem(R.id.menu_ai_chat)
+
         cartIcon.setIconTintList(getColorStateList(R.color.background_base))
         newsIcon.setIconTintList(getColorStateList(R.color.background_base))
+        aiChatIcon.setIconTintList(getColorStateList(R.color.background_base))
 
         val initials = actionView?.findViewById<TextView>(R.id.profileInitials)
 
@@ -149,6 +153,10 @@ class MainActivity : AppCompatActivity() {
         }
         newsIcon.setOnMenuItemClickListener{
             startActivity(Intent(this, InformationActivity::class.java))
+            true
+        }
+        aiChatIcon.setOnMenuItemClickListener{
+            startActivity(Intent(this, AIChatActivity::class.java))
             true
         }
 

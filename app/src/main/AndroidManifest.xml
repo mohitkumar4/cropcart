@@ -79,6 +79,11 @@
             android:exported="false"
             />
 
+        <activity
+            android:name=".ai.AIChatActivity"
+            android:exported="false"
+            />
+
     </application>
 
 </manifest>
