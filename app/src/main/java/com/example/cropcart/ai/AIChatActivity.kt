@@ -5,15 +5,20 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cropcart.BuildConfig
 import com.example.cropcart.R
+import kotlinx.coroutines.launch
 
-class AIChatActivity : AppCompatActivity(), ApiService {
+class AIChatActivity : AppCompatActivity() {
     private lateinit var rv: RecyclerView
     private lateinit var inputField: EditText
     private lateinit var btnSend: ImageButton
     private lateinit var adapter: GeminiChatAdapter
+
+    private val geminiAPIKey: String = BuildConfig.GEMINI_API
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -33,21 +38,32 @@ class AIChatActivity : AppCompatActivity(), ApiService {
     }
 
     private fun evaluateInput(){
-        val newMessageToAI = inputField.text.toString().trim()
-        if(newMessageToAI.isEmpty()){
+        val userText = inputField.text.toString().trim()
+        if(userText.isEmpty()){
             Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT).show()
             return
         }
         inputField.setText("")
 
-        adapter.addMessage(AIChatMessage(true, newMessageToAI))
-        adapter.addMessage(AIChatMessage(false, "Mock reply"))
-    }
+        adapter.addMessage(AIChatMessage(true, userText))
 
-    override suspend fun getChatResponse(
-        api: String,
-        request: GeminiRequest
-    ): GeminiResponse {
-        TODO("Not yet implemented")
+        val loadingMessage = AIChatMessage(false, "Thinking...")
+        adapter.addMessage(loadingMessage)
+        val loadingPosition = adapter.itemCount - 1
+
+        lifecycleScope.launch{
+            try {
+                val request = GeminiRequest(listOf(GeminiContent(listOf(GeminiPart(userText)))))
+
+                val response = AIRepo.apiService.getChatResponse(geminiAPIKey, request)
+
+                val aiReply = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text
+                    ?: "No response from AI"
+
+                adapter.updateMessage(loadingPosition, aiReply)
+            } catch (e: Exception) {
+                Toast.makeText(this@AIChatActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

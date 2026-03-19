@@ -17,7 +17,7 @@ class AddressAdapter(
     private val onDelete: (Address) -> Unit
 ) : RecyclerView.Adapter<AddressAdapter.AddressViewHolder>() {
 
-    inner class AddressViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class AddressViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val addressText: TextView = view.findViewById(R.id.addressText)
         val btnSelect: Button = view.findViewById(R.id.btnSelectAddress)
         val btnEdit: Button = view.findViewById(R.id.btnEditAddress)

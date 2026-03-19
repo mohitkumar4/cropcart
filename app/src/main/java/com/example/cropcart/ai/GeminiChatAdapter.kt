@@ -31,6 +31,15 @@ class GeminiChatAdapter(private val context: Context) : RecyclerView.Adapter<Gem
         notifyItemInserted(chatMessages.size)
     }
 
+    fun updateMessage(position: Int, newText: String) {
+        if (position >= 0 && position < chatMessages.size) {
+            val message = chatMessages[position]
+            message.msg = newText
+
+            notifyItemChanged(position)
+        }
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

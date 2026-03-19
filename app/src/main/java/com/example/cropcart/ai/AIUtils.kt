@@ -1,5 +1,7 @@
 package com.example.cropcart.ai
 
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -17,4 +19,13 @@ interface ApiService{
         @Query("key") api: String,
         @Body request: GeminiRequest,
     ): GeminiResponse
+}
+
+object AIRepo {
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://generativelanguage.googleapis.com/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val apiService = retrofit.create(ApiService::class.java)
 }
