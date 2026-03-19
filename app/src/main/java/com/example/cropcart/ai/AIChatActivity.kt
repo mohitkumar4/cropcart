@@ -2,8 +2,10 @@ package com.example.cropcart.ai
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.BuildConfig
 import com.example.cropcart.R
 import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
+import com.example.cropcart.gui.text.SimpleTextView
 import kotlinx.coroutines.launch
 
 class AIChatActivity : AppCompatActivity() {
@@ -20,7 +23,6 @@ class AIChatActivity : AppCompatActivity() {
     private lateinit var inputField: EditText
     private lateinit var btnSend: ImageButton
     private lateinit var adapter: GeminiChatAdapter
-    private lateinit var aiChatInterfaceMainLayout: LinearLayout
     private lateinit var emptyChatCtn: LinearLayout
 
     private val geminiAPIKey: String = BuildConfig.GEMINI_API
@@ -28,10 +30,15 @@ class AIChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ai_chat)
+        findViewById<LinearLayout>(R.id.aiChatInterfaceMainLayout).setTiledBackground(R.drawable.pattern_topography, 0.25f, 0.1f)
+
+        val welcomeLogo = findViewById<ImageView>(R.id.welcomeLogo)
+        val welcomeText = findViewById<SimpleTextView>(R.id.welcomeText)
+        welcomeLogo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
+        welcomeText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
 
         inputField = findViewById<EditText>(R.id.aiCharInputField)
         btnSend = findViewById<ImageButton>(R.id.btnSend)
-        aiChatInterfaceMainLayout  = findViewById<LinearLayout>(R.id.aiChatInterfaceMainLayout)
         emptyChatCtn = findViewById<LinearLayout>(R.id.emptyChatCtn)
 
         rv = findViewById(R.id.rvAIChat)
@@ -42,8 +49,6 @@ class AIChatActivity : AppCompatActivity() {
         btnSend.setOnClickListener {
             evaluateInput()
         }
-
-        aiChatInterfaceMainLayout.setTiledBackground(R.drawable.pattern_topography, 0.25f, 0.1f)
     }
 
     private fun evaluateInput(){

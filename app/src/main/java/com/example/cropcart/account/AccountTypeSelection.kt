@@ -9,9 +9,11 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.example.cropcart.MainActivity
 import com.example.cropcart.R
 import com.example.cropcart.firebase.FirebaseRepo
+import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -27,6 +29,8 @@ class AccountTypeSelection : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_acc_type_selection)
+        findViewById<LinearLayout>(R.id.main).setTiledBackground(R.drawable.pattern_leaf, 0.25f, 0.05f)
+        findViewById<LinearLayout>(R.id.mainCardLinearLayout).setTiledBackground(R.drawable.pattern_topography, 0.25f, 0.05f)
         progressBar = findViewById<ProgressBar>(R.id.progressBar)
         checkerCtn = findViewById<LinearLayout>(R.id.checkerCtn)
 

@@ -41,12 +41,14 @@
         >
 
         <ImageView
+            android:id="@+id/welcomeLogo"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/gemini_logo"
             />
 
         <com.example.cropcart.gui.text.SimpleTextView
+            android:id="@+id/welcomeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:preset="primary_text"
@@ -69,6 +71,7 @@
         android:gravity="center_vertical"
         android:background="@android:color/transparent"
         android:layout_gravity="bottom"
+        android:padding="8dp"
         >
 
         <androidx.cardview.widget.CardView
@@ -78,7 +81,8 @@
             android:layout_margin="4dp"
             app:cardCornerRadius="20dp"
             app:cardBackgroundColor="@color/background_lighter"
-            app:cardElevation="4dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
             >
 
             <EditText
@@ -100,7 +104,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_margin="2dp"
             app:cardCornerRadius="100dp"
             app:cardBackgroundColor="@color/primary_lighter"
             app:cardElevation="4dp"
@@ -113,7 +117,7 @@
                 android:layout_margin="4dp"
                 android:src="@drawable/baseline_send_24"
                 android:backgroundTint="@android:color/transparent"
-                android:tint="@color/background_lighter"
+                android:tint="@color/white"
                 android:padding="@dimen/ai_chat_icon_padding"
                 />
 

@@ -18,13 +18,11 @@
         <com.google.android.material.search.SearchBar
             android:id="@+id/searchInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="62dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:hint="Search produce..."
-            android:background="@drawable/searchbar_background"
             android:backgroundTint="@color/white"
-            app:endIconDrawable="@android:drawable/ic_menu_search"
-            android:layout_marginHorizontal="12dp"
+            android:layout_marginHorizontal="24dp"
             />
 
         <com.google.android.material.tabs.TabLayout
@@ -40,7 +38,7 @@
             app:tabSelectedTextColor="@color/black"
             app:tabMode="scrollable"
             app:tabGravity="fill"
-            android:layout_marginTop="8dp"/>
+            />
 
     </LinearLayout>
 
@@ -58,16 +56,27 @@
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        android:layout_marginTop="8dp" />-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sectionsRecyclerView"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
+        android:padding="4dp"
+        android:layout_margin="12dp"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="4dp"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sectionsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+
+    </androidx.cardview.widget.CardView>
 
 
 <!--    &lt;!&ndash; Featured Products Title &ndash;&gt;-->

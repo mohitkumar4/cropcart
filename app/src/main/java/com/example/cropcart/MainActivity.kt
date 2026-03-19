@@ -23,6 +23,7 @@ import com.example.cropcart.address.ManageAddressesActivity
 import com.example.cropcart.ai.AIChatActivity
 import com.example.cropcart.cart.CartActivity
 import com.example.cropcart.firebase.FirebaseRepo
+import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
 import com.example.cropcart.information.InformationActivity
 import com.example.cropcart.section.BuyFragment
 import com.example.cropcart.seller.SellFragment
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        findViewById<LinearLayout>(R.id.main).setTiledBackground(R.drawable.pattern_leaf, 0.25f, 0.05f)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
 

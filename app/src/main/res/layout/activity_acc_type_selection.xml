@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:background="@android:color/transparent"
         >
 
         <com.example.cropcart.gui.text.SimpleTextView
@@ -23,16 +25,16 @@
             android:layout_height="wrap_content"
             android:text="Verifying account settings"
             android:textAlignment="center"
-            app:preset="primary_text"
-            android:layout_marginBottom="40dp"
+            app:preset="secondary_text"
+            android:layout_marginBottom="12dp"
             />
 
         <ProgressBar
             android:layout_width="128dp"
             android:layout_height="24dp"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:indeterminateTint="@color/background_darker"
             android:indeterminate="true"
+            android:indeterminateTint="@color/green_primary"
             />
 
     </LinearLayout>
@@ -51,86 +53,123 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="8dp"
         >
 
-        <com.example.cropcart.gui.text.SimpleTextView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Who are you?"
-            android:textAlignment="center"
-            app:preset="primary_text"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingVertical="40dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="true"
             >
 
             <LinearLayout
-                android:id="@+id/farmerCtn"
-                android:layout_width="0dp"
+                android:id="@+id/mainCardLinearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_weight="0.45"
+                android:padding="16dp"
                 >
-
-                <ImageView
-                    android:id="@+id/imgFarmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/account_type_selection_image"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/baseline_grass_24"
-                    app:tint="@color/primary_base"
-                    />
 
                 <com.example.cropcart.gui.text.SimpleTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Farmer"
+                    android:text="Who are you?"
                     android:textAlignment="center"
-                    app:preset="secondary_text"
+                    app:preset="primary_text"
                     />
 
-            </LinearLayout>
-
-            <View
-                android:layout_width="4dp"
-                android:layout_height="@dimen/account_type_selection_image"
-                android:background="@color/background_base"
-                />
-
-            <LinearLayout
-                android:id="@+id/customerCtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_weight="0.45"
-                >
-
-                <ImageView
-                    android:id="@+id/imgCustomer"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/account_type_selection_image"
-                    android:scaleType="fitCenter"
-                    app:tint="@color/secondary_base"
-                    android:src="@drawable/baseline_shopping_cart_24"
-                    />
-
-                <com.example.cropcart.gui.text.SimpleTextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Customer"
-                    android:textAlignment="center"
-                    app:preset="secondary_text"
-                    />
+                    android:gravity="center"
+                    android:paddingVertical="40dp"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true"
+                        android:layout_weight="0.45"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/farmerCtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="8dp"
+                            >
+
+                            <ImageView
+                                android:id="@+id/imgFarmer"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/account_type_selection_image"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/baseline_grass_24"
+                                app:tint="@color/primary_base"
+                                />
+
+                            <com.example.cropcart.gui.text.SimpleTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Farmer"
+                                android:textAlignment="center"
+                                app:preset="secondary_text"
+                                />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true"
+                        android:layout_weight="0.45"
+                        >
+
+                        <LinearLayout
+                            android:id="@+id/customerCtn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:layout_weight="0.45"
+                            android:padding="8dp"
+                            >
+
+                            <ImageView
+                                android:id="@+id/imgCustomer"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/account_type_selection_image"
+                                android:scaleType="fitCenter"
+                                app:tint="@color/secondary_base"
+                                android:src="@drawable/baseline_shopping_cart_24"
+                                />
+
+                            <com.example.cropcart.gui.text.SimpleTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Customer"
+                                android:textAlignment="center"
+                                app:preset="secondary_text"
+                                />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -2,10 +2,12 @@ package com.example.cropcart.information
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.cropcart.R
+import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
 
 class InformationActivity : AppCompatActivity() {
     private lateinit var btnNews: ImageButton
@@ -15,11 +17,11 @@ class InformationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_information)
+        findViewById<LinearLayout>(R.id.mainInformationLayout).setTiledBackground(R.drawable.pattern_topography, 0.25f, 0.05f)
 
         btnNews = findViewById(R.id.btnNews)
         btnWeather = findViewById(R.id.btnWeather)
         frgMng = supportFragmentManager
-
 
         if (savedInstanceState == null) {
             setFragment(NewsFragment())

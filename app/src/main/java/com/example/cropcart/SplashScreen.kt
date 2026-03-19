@@ -11,6 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +22,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.cropcart.account.AccountTypeSelection
 import com.example.cropcart.account.LoginActivity
 import com.example.cropcart.firebase.FirebaseRepo
+import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashScreen : AppCompatActivity() {
@@ -28,6 +30,8 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_screen)
+
+        findViewById<LinearLayout>(R.id.main).setTiledBackground(R.drawable.pattern_leaf, 0.25f, 0.05f)
 
         val appNameText: TextView = findViewById<TextView>(R.id.appName)
         appNameText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in))
