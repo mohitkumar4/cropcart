@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.R
@@ -15,6 +15,7 @@ import com.example.cropcart.firebase.FirebaseRepo
 import com.example.cropcart.search.SearchActivity
 import com.example.cropcart.product.FeaturedProduct
 import com.example.cropcart.product.ProductRepo
+import com.google.android.material.search.SearchBar
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -51,7 +52,7 @@ class BuyFragment : Fragment() {
 
         val tabLayout = view.findViewById<TabLayout>(R.id.categoryTabLayout)
 
-        val searchBar = view.findViewById<TextView>(R.id.searchInputLayout)
+        val searchBar = view.findViewById<SearchBar>(R.id.searchInputLayout)
         searchBar.setOnClickListener {
             val intent = Intent(requireContext(), SearchActivity::class.java)
             startActivity(intent)
@@ -86,7 +87,6 @@ class BuyFragment : Fragment() {
         categories.forEach { (name, iconRes) ->
             tabLayout.addTab(tabLayout.newTab().setText(name).setIcon(iconRes))
         }
-
 //        val allProducts = listOf(
 //            // Fresh Produce
 //            FeaturedProduct("1", "Red Apple", "Fruits", "Fresh Produce", "https://via.placeholder.com/150", 120.0),
@@ -128,16 +128,16 @@ class BuyFragment : Fragment() {
         updateSections(allProducts) // ✅ show products when fragment starts
 
 
+        tabLayout.tabIconTint = ContextCompat.getColorStateList(requireContext(), R.color.tab_icon_selector)
+        tabLayout.tabTextColors = ContextCompat.getColorStateList(requireContext(), R.color.tab_icon_selector)
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val selectedCategory = tab.text.toString()
-
                 val filteredProducts = if (selectedCategory == "All") {
                     allProducts
                 } else {
                     allProducts.filter { it.category == selectedCategory }
                 }
-
                 updateSections(filteredProducts)
             }
 
