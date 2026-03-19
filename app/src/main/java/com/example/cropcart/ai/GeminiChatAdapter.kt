@@ -1,6 +1,7 @@
 package com.example.cropcart.ai
 
 import android.content.Context
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,13 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.R
 import com.example.cropcart.gui.text.SimpleTextView
+import io.noties.markwon.Markwon
 
 class GeminiChatAdapter(private val context: Context) : RecyclerView.Adapter<GeminiChatAdapter.ChatViewHolder>() {
     private var chatMessages: MutableList<AIChatMessage> = mutableListOf()
+    private val markwon = Markwon.create(context)
+    private val iconGemini = context.resources.getDrawable(R.drawable.gemini_logo)
+    private val iconUser = context.resources.getDrawable(R.drawable.person)
 
     inner class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view){
         private val msgTv: SimpleTextView = view.findViewById<SimpleTextView>(R.id.msg)
@@ -19,10 +24,12 @@ class GeminiChatAdapter(private val context: Context) : RecyclerView.Adapter<Gem
         private val linearLayout: LinearLayout = view.findViewById<LinearLayout>(R.id.aiChatLinearLayout)
 
         fun bind(item: AIChatMessage){
-            msgTv.text = item.msg
-
-            icon.setImageDrawable(context.resources.getDrawable(if(item.isUser) R.drawable.person else R.drawable.gemini_logo))
+            icon.setImageDrawable(if(item.isUser) iconUser else iconGemini)
             linearLayout.setLayoutDirection(if(item.isUser) View.LAYOUT_DIRECTION_LTR else View.LAYOUT_DIRECTION_RTL)
+
+            val markdown = item.msg
+            markwon.setMarkdown(msgTv, markdown)
+            msgTv.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 

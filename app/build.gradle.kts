@@ -76,6 +76,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.generativeai)
 
+    implementation("io.noties.markwon:core:4.6.2")
+
     // networking
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

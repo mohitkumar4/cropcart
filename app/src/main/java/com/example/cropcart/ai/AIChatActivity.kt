@@ -47,16 +47,14 @@ class AIChatActivity : AppCompatActivity() {
 
         adapter.addMessage(AIChatMessage(true, userText))
 
-        val loadingMessage = AIChatMessage(false, "Thinking...")
+        val loadingMessage = AIChatMessage(false, "_Thinking..._")
         adapter.addMessage(loadingMessage)
         val loadingPosition = adapter.itemCount - 1
 
         lifecycleScope.launch{
             try {
                 val request = GeminiRequest(listOf(GeminiContent(listOf(GeminiPart(userText)))))
-
                 val response = AIRepo.apiService.getChatResponse(geminiAPIKey, request)
-
                 val aiReply = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text
                     ?: "No response from AI"
 
