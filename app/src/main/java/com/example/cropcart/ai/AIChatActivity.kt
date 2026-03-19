@@ -1,8 +1,10 @@
 package com.example.cropcart.ai
 
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.BuildConfig
 import com.example.cropcart.R
+import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
 import kotlinx.coroutines.launch
 
 class AIChatActivity : AppCompatActivity() {
@@ -17,6 +20,8 @@ class AIChatActivity : AppCompatActivity() {
     private lateinit var inputField: EditText
     private lateinit var btnSend: ImageButton
     private lateinit var adapter: GeminiChatAdapter
+    private lateinit var aiChatInterfaceMainLayout: LinearLayout
+    private lateinit var emptyChatCtn: LinearLayout
 
     private val geminiAPIKey: String = BuildConfig.GEMINI_API
 
@@ -26,6 +31,8 @@ class AIChatActivity : AppCompatActivity() {
 
         inputField = findViewById<EditText>(R.id.aiCharInputField)
         btnSend = findViewById<ImageButton>(R.id.btnSend)
+        aiChatInterfaceMainLayout  = findViewById<LinearLayout>(R.id.aiChatInterfaceMainLayout)
+        emptyChatCtn = findViewById<LinearLayout>(R.id.emptyChatCtn)
 
         rv = findViewById(R.id.rvAIChat)
         adapter = GeminiChatAdapter(this)
@@ -35,6 +42,8 @@ class AIChatActivity : AppCompatActivity() {
         btnSend.setOnClickListener {
             evaluateInput()
         }
+
+        aiChatInterfaceMainLayout.setTiledBackground(R.drawable.pattern_topography, 0.25f, 0.1f)
     }
 
     private fun evaluateInput(){
@@ -45,11 +54,19 @@ class AIChatActivity : AppCompatActivity() {
         }
         inputField.setText("")
 
+
+        val loadingPosition = adapter.itemCount - 1
         adapter.addMessage(AIChatMessage(true, userText))
+        if (rv.visibility != View.VISIBLE){
+            rv.visibility = View.VISIBLE
+            emptyChatCtn.visibility = View.GONE
+        }
+
+        scrollToBottom()
 
         val loadingMessage = AIChatMessage(false, "_Thinking..._")
         adapter.addMessage(loadingMessage)
-        val loadingPosition = adapter.itemCount - 1
+        scrollToBottom()
 
         lifecycleScope.launch{
             try {
@@ -59,9 +76,14 @@ class AIChatActivity : AppCompatActivity() {
                     ?: "No response from AI"
 
                 adapter.updateMessage(loadingPosition, aiReply)
+                scrollToBottom()
             } catch (e: Exception) {
                 Toast.makeText(this@AIChatActivity, "Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun scrollToBottom(){
+        rv.scrollToPosition(adapter.itemCount - 1)
     }
 }

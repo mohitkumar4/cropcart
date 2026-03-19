@@ -14,5 +14,6 @@
     <dimen name="ai_chat_icon_size">48dp</dimen>
     <dimen name="ai_chat_icon_padding">8dp</dimen>
     <dimen name="ai_chat_send_btn_size">36dp</dimen>
+    <dimen name="ai_chat_item_min_height">48dp</dimen>
 
 </resources>

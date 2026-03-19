@@ -1,60 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/aiChatInterfaceMainLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:backgroundTint="@color/primary_base"
+    >
 
-    <com.example.cropcart.gui.text.SimpleTextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AI Chat"
-        android:textAlignment="center"
-        android:background="@color/primary_lighter"
-        app:preset="activity_name"
-        />
+        android:gravity="center"
+        >
 
-    <View
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/gemini_logo"
+            />
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gemini"
+            android:textAlignment="center"
+            app:preset="secondary_text"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyChatCtn"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/background_darker"
-        />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/gemini_logo"
+            />
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:preset="primary_text"
+            android:text="How can I help you?"
+            />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAIChat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/background_darker"
+        android:visibility="gone"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:background="@color/background_lighter"
+        android:background="@android:color/transparent"
+        android:layout_gravity="bottom"
         >
 
-        <EditText
-            android:id="@+id/aiCharInputField"
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Chat with the AI"
             android:layout_weight="1"
-            android:inputType="textMultiLine"
-            android:minLines="1"
-            android:maxLines="5"
-            android:scrollbars="vertical"
-            android:background="@android:color/transparent"
-            android:padding="12dp"
             android:layout_margin="4dp"
-            />
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/background_lighter"
+            app:cardElevation="4dp"
+            >
+
+            <EditText
+                android:id="@+id/aiCharInputField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Chat with Gemini"
+                android:inputType="textMultiLine"
+                android:minLines="1"
+                android:maxLines="5"
+                android:scrollbars="vertical"
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:layout_margin="4dp"
+                />
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"

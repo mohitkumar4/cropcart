@@ -7,7 +7,7 @@
         android:icon="@drawable/shopping_cart"
         android:title="Settings"
         app:showAsAction="always"
-        android:iconTint="@color/background_base"
+        android:iconTint="@color/background_lighter"
         />
 
     <item
@@ -15,7 +15,7 @@
         android:title="Information"
         app:showAsAction="always"
         android:icon="@drawable/baseline_newspaper_24"
-        android:iconTint="@color/background_base"
+        android:iconTint="@color/background_lighter"
         />
 
     <item
@@ -23,7 +23,7 @@
         android:title="AI Chat"
         app:showAsAction="always"
         android:icon="@drawable/baseline_chat_24"
-        android:iconTint="@color/background_base"
+        android:iconTint="@color/background_lighter"
         />
 
     <item

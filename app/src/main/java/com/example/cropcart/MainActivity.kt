@@ -138,9 +138,9 @@ class MainActivity : AppCompatActivity() {
         val newsIcon = menu.findItem(R.id.menu_information)
         val aiChatIcon = menu.findItem(R.id.menu_ai_chat)
 
-        cartIcon.setIconTintList(getColorStateList(R.color.background_base))
-        newsIcon.setIconTintList(getColorStateList(R.color.background_base))
-        aiChatIcon.setIconTintList(getColorStateList(R.color.background_base))
+        cartIcon.setIconTintList(getColorStateList(R.color.background_lighter))
+        newsIcon.setIconTintList(getColorStateList(R.color.background_lighter))
+        aiChatIcon.setIconTintList(getColorStateList(R.color.background_lighter))
 
         val initials = actionView?.findViewById<TextView>(R.id.profileInitials)
 
