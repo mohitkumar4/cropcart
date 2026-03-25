@@ -1,10 +1,12 @@
 package com.example.cropcart.ai
 
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
+import java.time.Duration
 
 data class GeminiPart(val text: String)
 data class GeminiContent(val parts: List<GeminiPart>)
@@ -22,9 +24,16 @@ interface ApiService{
 }
 
 object AIRepo {
-    val retrofit = Retrofit.Builder()
+    private val geminiClient = OkHttpClient.Builder()
+        .connectTimeout(Duration.ofSeconds(60))
+        .readTimeout(Duration.ofSeconds(60))
+        .writeTimeout(Duration.ofSeconds(60))
+        .build()
+
+    private val retrofit = Retrofit.Builder()
         .baseUrl("https://generativelanguage.googleapis.com/")
         .addConverterFactory(GsonConverterFactory.create())
+        .client(geminiClient)
         .build()
 
     val apiService = retrofit.create(ApiService::class.java)

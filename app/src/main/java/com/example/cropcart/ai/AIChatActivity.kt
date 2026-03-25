@@ -2,6 +2,7 @@ package com.example.cropcart.ai
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.EditText
@@ -17,8 +18,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cropcart.BuildConfig
 import com.example.cropcart.R
 import com.example.cropcart.ai.AIRepo.MessageStatus
+import com.example.cropcart.firebase.FirebaseRepo
 import com.example.cropcart.gui.text.GuiRepo.setTiledBackground
 import com.example.cropcart.gui.text.SimpleTextView
+import com.example.cropcart.prompt.PromptAIAttachment
+import com.example.cropcart.prompt.PromptRepo
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.net.UnknownHostException
@@ -30,14 +34,20 @@ class AIChatActivity : AppCompatActivity() {
     private lateinit var adapter: GeminiChatAdapter
     private lateinit var emptyChatCtn: LinearLayout
     private lateinit var cardViewSendBtn: CardView
+    private lateinit var btnAttachment: ImageButton
+    private lateinit var attachmentCheckMark: ImageView
 
     private val geminiAPIKey: String = BuildConfig.GEMINI_API
 
     private lateinit var enabledColorSendBtn: ColorStateList
     private lateinit var disabledColorSendBtn: ColorStateList
 
+    // prompt information
+    private var extraInformation: String? = null
+
     // state tracker
     private var isWaitingForResponse: Boolean = false
+    private var attachments: MutableSet<PromptRepo.AIAttachment> = mutableSetOf()
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -51,10 +61,13 @@ class AIChatActivity : AppCompatActivity() {
         enabledColorSendBtn = resources.getColorStateList(R.color.primary_lighter, theme)
         disabledColorSendBtn = resources.getColorStateList(R.color.gray, theme)
 
-        inputField = findViewById<EditText>(R.id.aiCharInputField)
+        inputField = findViewById<EditText>(R.id.aiChatInputField)
         btnSend = findViewById<ImageButton>(R.id.btnSend)
         emptyChatCtn = findViewById<LinearLayout>(R.id.emptyChatCtn)
         cardViewSendBtn = findViewById<CardView>(R.id.cardViewSendBtn)
+        btnAttachment = findViewById<ImageButton>(R.id.btnAttachment)
+        attachmentCheckMark = findViewById<ImageView>(R.id.attachmentCheckMark)
+        attachmentCheckMark.visibility = View.GONE
 
         rv = findViewById(R.id.rvAIChat)
         adapter = GeminiChatAdapter(this)
@@ -63,6 +76,37 @@ class AIChatActivity : AppCompatActivity() {
 
         btnSend.setOnClickListener {
             evaluateInput()
+        }
+
+        btnAttachment.setOnClickListener {
+            PromptAIAttachment(this, attachments){ selection, userSubmitted ->
+                if(!userSubmitted){ return@PromptAIAttachment }
+                attachments = selection
+                var iconId: Int
+                var attachmentCheckMarkVisibility: Int
+                if (selection.contains(PromptRepo.AIAttachment.CART)){
+                    iconId = R.drawable.shopping_cart
+                    attachmentCheckMarkVisibility = View.VISIBLE
+                    FirebaseRepo.getCartItems { isSuccessful, msg, items ->
+                        if (!isSuccessful){
+                            Toast.makeText(this@AIChatActivity, msg, Toast.LENGTH_SHORT).show()
+                            extraInformation = null
+                            return@getCartItems
+                        }
+
+                        val details: MutableList<String> = mutableListOf()
+                        details.add("Items in cart:")
+                        items.forEach { details.add("Name: ${it.name}, Quantity: ${it.quantity}") }
+                        extraInformation = details.joinToString("\n")
+                    }
+                }
+                else{
+                    iconId = R.drawable.baseline_attachment_24
+                    attachmentCheckMarkVisibility = View.GONE
+                }
+                attachmentCheckMark.visibility = attachmentCheckMarkVisibility
+                btnAttachment.setImageResource(iconId)
+            }
         }
     }
 
@@ -74,8 +118,9 @@ class AIChatActivity : AppCompatActivity() {
         }
         inputField.setText("")
 
+        val fullPrompt = "${userText}\n${extraInformation?:""}"
 
-        adapter.addMessage(AIChatMessage(true, userText))
+        adapter.addMessage(AIChatMessage(true, fullPrompt))
         setWaitingStateTo(true)
         if (rv.visibility != View.VISIBLE){
             rv.visibility = View.VISIBLE
@@ -90,7 +135,7 @@ class AIChatActivity : AppCompatActivity() {
 
         lifecycleScope.launch{
             try {
-                val request = GeminiRequest(listOf(GeminiContent(listOf(GeminiPart(userText)))))
+                val request = GeminiRequest(listOf(GeminiContent(listOf(GeminiPart(fullPrompt)))))
                 val response = AIRepo.apiService.getChatResponse(geminiAPIKey, request)
                 val aiReply = response.candidates.firstOrNull()?.content?.parts?.firstOrNull()?.text
                     ?: "No response from AI"

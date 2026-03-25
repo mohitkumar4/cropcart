@@ -28,9 +28,8 @@ class GeminiChatAdapter(private val context: Context) : RecyclerView.Adapter<Gem
     inner class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val msgTv: SimpleTextView = view.findViewById<SimpleTextView>(R.id.msg)
         private val icon: ImageView = view.findViewById<ImageView>(R.id.icon)
-        private val linearLayout: ConstraintLayout = view.findViewById<ConstraintLayout>(R.id.aiChatContentLayout)
+        private val aiChatContentLayout: ConstraintLayout = view.findViewById<ConstraintLayout>(R.id.aiChatContentLayout)
         private val aiChatItemCard: CardView = view.findViewById<CardView>(R.id.aiChatItemCard)
-
         private val aiChatWrapperLinearLayout: LinearLayout = view.findViewById<LinearLayout>(R.id.aiChatWrapperLinearLayout)
 
         fun bind(item: AIChatMessage){
@@ -50,7 +49,7 @@ class GeminiChatAdapter(private val context: Context) : RecyclerView.Adapter<Gem
             }
 
             icon.setImageDrawable(if(item.isUser) iconUser else iconGemini)
-            linearLayout.setLayoutDirection(if(item.isUser) View.LAYOUT_DIRECTION_LTR else View.LAYOUT_DIRECTION_RTL)
+            aiChatContentLayout.setLayoutDirection(if(item.isUser) View.LAYOUT_DIRECTION_LTR else View.LAYOUT_DIRECTION_RTL)
 
             aiChatWrapperLinearLayout.setLayoutDirection(if(item.isUser) View.LAYOUT_DIRECTION_LTR else View.LAYOUT_DIRECTION_RTL)
 

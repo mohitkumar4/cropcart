@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/promptCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/background_lighter"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:gravity="center"
+        >
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textAlignment="center"
+            android:layout_marginBottom="20dp"
+            app:preset="primary_text"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageButton
+                android:id="@+id/btnCart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/shopping_cart"
+                android:backgroundTint="@android:color/transparent"
+                app:tint="@color/background_darker"
+                />
+
+            <ImageView
+                android:id="@+id/cartCheckMark"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_check_circle_24"
+                app:tint="@color/primary_lighter"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.example.cropcart.gui.text.SimpleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your Cart"
+            android:textAlignment="center"
+            app:preset="secondary_text"
+            />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Confirm"
+            android:textColor="@color/background_darker"
+            android:backgroundTint="@color/primary_lighter"
+            />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
